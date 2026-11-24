@@ -1,0 +1,9 @@
+# 每周读完后，把最惊艳的 2-3 篇论文标题与理由写在这里，系统会自动向你的审美对齐
+positive_examples:
+  - "Histology-guided 3D reconstruction of spatial transcriptomics with continuous neural fields"
+  - "Scaling virtual cell foundation models to predict combinatorial drug perturbations in primary patient tissues"
+
+# 明确不想看、容易凑数的低价值方向
+negative_filters:
+  - "Purely descriptive wet-lab case reports without computational modeling or spatial/multi-omics integration"
+  - "Incremental 2D cell segmentation benchmarks with no molecular or clinical downstream task"

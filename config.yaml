@@ -1,0 +1,117 @@
+tier1_journals:
+  - name: "Nature"
+    issn: "1476-4687"
+  - name: "Science"
+    issn: "1095-9203"
+  - name: "Cell"
+    issn: "0092-8674"
+  - name: "Nature Biotechnology"
+    issn: "1546-1696"
+  - name: "Nature Medicine"
+    issn: "1546-170X"
+  - name: "Cancer Cell"
+    issn: "1535-6108"
+  - name: "Nature Methods"
+    issn: "1548-7105"
+  - name: "Nature Biomedical Engineering"
+    issn: "2157-846X"
+  - name: "Nature Computational Science"
+    issn: "2662-8457"
+  - name: "Nature Machine Intelligence"
+    issn: "2522-5839"
+  - name: "Nature Genetics"
+    issn: "1546-1718"
+  - name: "Nature Cancer"
+    issn: "2662-1347"
+  - name: "Nature Cell Biology"
+    issn: "1476-4679"
+
+# 仅配置已公布会期。新的届次可追加，历年回查会按日期匹配。
+conference_events:
+  - name: "MICCAI"
+    start: "2026-09-27"
+    end: "2026-10-01"
+    url: "https://miccai.org/upcoming-conferences/"
+  - name: "NeurIPS"
+    start: "2026-12-06"
+    end: "2026-12-12"
+    url: "https://neurips.cc/Conferences/2026/Dates"
+  - name: "AAAI"
+    start: "2027-02-16"
+    end: "2027-02-23"
+    url: "https://aaai.org/conference/aaai/aaai-27/main-technical-track-call/"
+  - name: "ICLR"
+    start: "2027-04-26"
+    end: "2027-04-30"
+    url: "https://iclr.cc/Conferences/2027/Dates"
+  - name: "CVPR"
+    start: "2027-06-20"
+    end: "2027-06-24"
+    url: "https://cvpr.thecvf.com/Conferences/2027/Dates"
+  - name: "ICML"
+    start: "2027-07-31"
+    end: "2027-08-06"
+    url: "https://icml.cc/Conferences/2027"
+  - name: "ACL"
+    start: "2027-08-17"
+    end: "2027-08-22"
+    url: "https://2027.aclweb.org/"
+  - name: "MICCAI"
+    start: "2027-09-26"
+    end: "2027-10-01"
+    url: "https://miccai.org/upcoming-conferences/"
+  - name: "ICCV"
+    start: "2027-10-03"
+    end: "2027-10-07"
+    url: "https://iccv.thecvf.com/"
+
+tier2_sources:
+  biorxiv_categories:
+    - "bioinformatics"
+    - "systems-biology"
+    - "cancer-biology"
+    - "cell-biology"
+    - "genomics"
+    - "pathology"
+  arxiv_categories:
+    - "q-bio.QM"
+    - "q-bio.CB"
+    - "cs.CV"
+    - "cs.LG"
+  # 按四大支柱分组的检索词（不再截断）
+  keyword_groups:
+    3d_multiomics:
+      - "3D spatial transcriptomics"
+      - "3D reconstruction"
+      - "spatial multi-omics"
+      - "spatial proteomics"
+      - "serial histology"
+      - "whole-organ"
+    representation_learning:
+      - "multimodal representation"
+      - "multimodal alignment"
+      - "histopathology"
+      - "whole slide image"
+      - "foundation model"
+      - "optimal transport"
+    virtual_cell_organ:
+      - "virtual cell"
+      - "virtual organ"
+      - "digital twin"
+      - "perturbation"
+      - "in silico"
+      - "cell state transition"
+    clinical_value:
+      - "target discovery"
+      - "drug response"
+      - "clinical translation"
+      - "precision oncology"
+      - "therapeutic intervention"
+
+researcher_profile: |
+  Researcher: Fangfang Xu (Computational Biology & AI for Science).
+  Long-term Research Vision (4 Core Pillars):
+  1. [3D Multi-omics]: Reconstructing 3D whole-organ molecular atlases and continuous spatial multi-omics (transcriptomics, proteomics, metabolomics) from serial histology (H&E) and sparse spatial measurements.
+  2. [Multi-omics Representation Learning]: Learning unified, transferable biological representations across partially paired or unpaired modalities (e.g., histology-anchored alignment, vision-omics foundation models, optimal transport, flow matching).
+  3. [Virtual Cell & Virtual Organ]: Predictive modeling of cellular and tissue-level responses to genetic/chemical perturbations, scaling from single-cell virtual cells to spatially structured 3D virtual organs / digital twins.
+  4. [Downstream Medical & Real-World Value]: Translating these computational models into tangible clinical and pharmaceutical impact—actionable target discovery, drug perturbation prioritization, patient stratification, and therapy design.
