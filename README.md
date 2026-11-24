@@ -6,7 +6,7 @@
 
 使用有仓库访问权限的 GitHub 账号，在 Codex 中发送下面这句话。仓库根目录即为技能目录。
 
-> 请用 $skill-installer 从私有仓库 xufangfang408/weekly-paper-curator 的 main 分支根目录安装 weekly-paper-curator，并确认 Codex 能发现它。
+> 请用 $skill-installer 从仓库 xufangfang408/weekly-paper-curator 的 main 分支根目录安装 weekly-paper-curator，并确认 Codex 能发现它。
 
 已有本地仓库时，也可以把本目录放到 Codex 识别的技能目录（例如 `~/.agents/skills/weekly-paper-curator`）。打开新对话后可在技能选择器中选择它，或在提示词中输入 `$weekly-paper-curator`。 [Codex 技能目录说明](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills)
 
