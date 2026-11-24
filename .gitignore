@@ -6,3 +6,4 @@ __pycache__/
 *.lock
 /data/history.json
 /weekly_digests/
+.weekly-paper-curator/

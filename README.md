@@ -1,41 +1,45 @@
 # Weekly Paper Curator
 
-按四个研究方向生成中文周度论文清单。使用 OpenAlex、bioRxiv、arXiv 获取文献，Europe PMC 补齐期刊摘要。每周默认选出最多 100 篇，生成 Markdown 和 CSV。
+这是一个面向 Codex 的周度论文筛选技能。一次安装后，直接在对话中要求检索、打分、生成中文文献清单或记录阅读偏好。默认对话模式使用 Codex 的检索工具和模型。
 
-## 在新设备上使用
+## 在 Codex 安装
 
-安装 Git 和 Python 3.9 或更新版本，并用有仓库权限的账号登录 GitHub。使用 GitHub CLI 时，可先运行 `gh auth login --git-protocol https` 并让 Git 使用该凭据。以下命令适用于 macOS／Linux。
+使用有仓库访问权限的 GitHub 账号，在 Codex 中发送下面这句话。仓库根目录即为技能目录。
+
+> 请用 $skill-installer 从私有仓库 xufangfang408/weekly-paper-curator 的 main 分支根目录安装 weekly-paper-curator，并确认 Codex 能发现它。
+
+已有本地仓库时，也可以把本目录放到 Codex 识别的技能目录（例如 `~/.agents/skills/weekly-paper-curator`）。打开新对话后可在技能选择器中选择它，或在提示词中输入 `$weekly-paper-curator`。 [Codex 技能目录说明](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills)
+
+## 直接下达指令
+
+- `$weekly-paper-curator 帮我筛选本周最值得读的 20 篇，重点看虚拟细胞和药物响应。`
+- `$weekly-paper-curator 补跑 2026-11-18 到 2026-11-24，给我 Markdown 和 CSV。`
+- `$weekly-paper-curator 记住，我更喜欢用外部队列验证的空间多组学论文，因为结论更容易迁移。`
+
+默认检索最近 7 个 UTC 日期，最多推荐 100 篇，按方法学、研究契合度和转化价值打分。每条推荐包含原始链接和证据级别。完整报告保存到当前工作区的 `weekly_digests/`，也可在指令中指定目录。
+
+## 迁移配置与阅读记录
+
+- `config.yaml` 保存 13 本期刊、四类方向、研究画像及已核实的顶会会期。
+- `feedback.yaml` 随私有仓库分发。Codex 记录的新偏好可提交到同一仓库，让新设备安装时带上这些偏好。
+- `data/history.json` 是本地历史库。若要在新设备延续跨周去重，复制到新安装技能的相同相对路径。旧设备的周报可以另外复制。
+- 技能目录只读时，新记录保存在当前工作区的 `.weekly-paper-curator/`。迁移同一工作区时，可以一起复制这个目录。
+
+## 独立命令行模式
+
+此模式供需要定时或批量调用引擎的用户使用。安装 Python 3.9 或更新版本，在仓库目录运行以下命令。
 
 ```bash
-git clone https://github.com/xufangfang408/weekly-paper-curator.git
-cd weekly-paper-curator
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements.txt
-.venv/bin/python scripts/fetch_and_rank.py --check
+python -m pip install -r requirements.txt
+python scripts/fetch_and_rank.py --check
 ```
 
-Windows PowerShell 用 `py -3 -m venv .venv` 创建环境，之后将 `.venv/bin/python` 替换为 `.\.venv\Scripts\python.exe`。
-
-在线运行前，在启动脚本或 Codex 的同一环境设置 `OPENAI_API_KEY`。macOS／Linux 用 `export OPENAI_API_KEY='你的密钥'`，PowerShell 用 `$env:OPENAI_API_KEY = '你的密钥'`。使用兼容服务时可设置 `OPENAI_BASE_URL` 和 `OPENAI_MODEL`（默认 `https://api.openai.com/v1`、`gpt-4o-mini`）。设置 `OPENALEX_API_KEY` 可启用期刊抓取的游标分页。评分请求会将研究画像、偏好、论文标题和摘要发送给配置的模型服务。
+脚本使用 `OPENAI_API_KEY` 评分。可用 `OPENAI_BASE_URL` 和 `OPENAI_MODEL` 指定兼容服务。设置 `OPENALEX_API_KEY` 可启用 OpenAlex 游标分页。评分请求会把研究画像、偏好、论文标题和摘要发送给所配置的模型服务。
 
 ```bash
-.venv/bin/python scripts/fetch_and_rank.py
-.venv/bin/python scripts/fetch_and_rank.py --end-date 2026-11-24 --days 7 --top-k 30
+python scripts/fetch_and_rank.py
+python scripts/fetch_and_rank.py --end-date 2026-11-24 --days 7 --top-k 30
+python -m unittest discover -s tests -v
 ```
 
-如果需要让 Codex 在任意项目识别技能，首次克隆时把目标路径设为 `"$HOME/.agents/skills/weekly-paper-curator"`，然后在该目录完成相同的虚拟环境安装。之后在 Codex CLI 或 IDE 输入 `$weekly-paper-curator` 即可调用。 [Codex 技能目录说明](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills)
-
-## 偏好与跨设备连续性
-
-- `config.yaml` 保存 13 本期刊、四类关键词、研究画像和有来源链接的顶会会期。会期与检索窗口重合时，arXiv 会额外检索会名。会名来自预印本元数据时，只作为追踪线索。
-- `feedback.yaml` 随仓库分发。用 `--feedback-add positive` 或 `--feedback-add negative` 搭配 `--title` 和可选的 `--reason` 更新。需要同步新增偏好时，提交此文件，再在其他设备 `git pull`。
-- `data/history.json` 和 `weekly_digests/` 是本地运行数据。换设备时复制历史库即可延续去重。也可把历史库保存在同步目录，并用 `--history` 指定其路径。每次在一台设备上运行，避免同步盘同时写入。
-- 每台设备单独设置 API 密钥。虚拟环境、凭据文件、历史库及生成的周报均由 `.gitignore` 排除。
-
-## 运行与重试
-
-日期用 UTC，检索窗口包含起止两天。默认去重覆盖所有成功评分的候选，并在两个导出文件都写入后更新历史库。重复的 DOI、arXiv ID、OpenAlex ID 和标准化标题会合并，识别到预印本发表于配置中的顶刊时可再次入选。
-
-抓取覆盖不完整时，若仍有候选则生成带来源提示的周报，保留历史库以便用同一日期重试。评分失败时退出并保留原历史库。无新候选时保留现有报告。缺失或空白的历史库可直接启动。
-
-安装依赖后可用 `python -m unittest discover -s tests -v` 运行离线回归测试。
+命令行模式在两份报告导出后才更新历史库。遇到关键来源失败而生成部分结果时保留历史库，可用同一结束日期补跑。通过 `--history` 可指向已有历史库，通过 `--feedback-add positive` 或 `--feedback-add negative` 搭配 `--title` 和可选的 `--reason` 可更新偏好。
